@@ -47,10 +47,11 @@ print("-----------------------------------------")
 #The important stuffs! -> NOTE: make more pythonic if idx is not actually needed
 for i in range(len(services_tuple)):
     if "http" in services_tuple[i]:
+        os.system("nikto -h " + "http://" + args.ip + ":" + str(services_tuple[i][0]) + " > " + args.ip + "_nikto.txt")
+    if "ssh" in services_tuple[i]:
         print(services_tuple[i])
-    else if "ssh" in services_tuple[i]:
-        print(services_tuple[i])
-    else if "netbios-ssn" in services_tuple[i]:
+    if "netbios-ssn" in services_tuple[i]:
+        print("test")
         #smbscan , netstat etc.
 
 
