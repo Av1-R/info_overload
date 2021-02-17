@@ -3,7 +3,7 @@ import argparse
 import os
 import subprocess
 
-
+#NOTE: I am an idiot and have only included tcp services
 #Parse user arguments
 parser = argparse.ArgumentParser(description='3ncrypt0R')                                                                                                                                               
 parser.add_argument('-ip',
@@ -16,10 +16,10 @@ args = parser.parse_args()
 
 #Run initial service discovery via nmap
 nmapCommand = ("nmap -sC -sV -T4 -p- -v " + args.ip + " -oA " + args.ip)
-#os.system(nmapCommand)
+os.system(nmapCommand)
 
 #Grep & cut nmap output for open ports
-extract_ports = ("cat " + args.ip + ".nmap" + " | grep \"tcp open\" " + "| cut -d \"/\" -f 1" " > " + args.ip + "_openports.txt")
+extract_ports = ("cat " + args.ip + ".nmap" + " | grep \"tcp*\" " + "| grep \"open\" " + "| cut -d \"/\" -f 1" " > " + args.ip + "_openports.txt")
 os.system(extract_ports)
 
 #Grep and cut output for running services
@@ -52,7 +52,7 @@ print("-----------------------------------------")
 
 
 #Run searchsploit on ALL services discoverd in *nmap.xml
-os.system("searchsploit --json --nmap " + args.ip + ".nmap.xml > " + args.ip + "_sploit.json")
+os.system("searchsploit --json --nmap " + args.ip + ".xml > " + args.ip + "_sploit.json")
 
 
 #The important stuffs! -> NOTE: make more pythonic if idx is not actually needed
@@ -68,13 +68,13 @@ for i in range(len(services_tuple)):
         http_version = subprocess.check_output(get_http_server_version, shell=True)
         http_version = http_version.split("/")
         http_server_name = http_version[0]
-        http_server_version = http_version[1]
         
-        if http_server_version:
-            searchsploit_http = ("searchsploit " + str(http_server_name) + " " +  str(http_server_version) + " > " + args.ip + "p" + port + "_sploit_http_server.txt") 
+        if len(http_version) > 2:
+            http_server_version = http_version[1]
         
-        #print(searchsploit_http)
-        os.system(searchsploit_http) 
+            if http_server_version:
+                searchsploit_http = ("searchsploit " + str(http_server_name) + " " +  str(http_server_version) + " > " + args.ip + "p" + port + "_sploit_http_server.txt") 
+                os.system(searchsploit_http) 
     if "ssh" in services_tuple[i]:
         print(services_tuple[i])
     if "netbios-ssn" in services_tuple[i]:

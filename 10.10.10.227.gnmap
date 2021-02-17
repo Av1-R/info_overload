@@ -1,5 +1,0 @@
-# Nmap 7.80 scan initiated Wed Feb 17 06:44:32 2021 as: nmap -sC -sV -T4 -p- -v -oA 10.10.10.227 10.10.10.227
-# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
-Host: 10.10.10.227 ()	Status: Up
-Host: 10.10.10.227 ()	Ports: 22/open/tcp//ssh//OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)/, 8080/open/tcp//http//Apache Tomcat 9.0.38/	Ignored State: closed (65533)
-# Nmap done at Wed Feb 17 06:44:53 2021 -- 1 IP address (1 host up) scanned in 20.72 seconds
