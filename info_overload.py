@@ -1,6 +1,7 @@
 import sys
 import argparse
 import os
+import subprocess
 
 
 #Parse user arguments
@@ -46,8 +47,21 @@ print("-----------------------------------------")
 
 #The important stuffs! -> NOTE: make more pythonic if idx is not actually needed
 for i in range(len(services_tuple)):
-    if "http" in services_tuple[i]:
-        os.system("nikto -h " + "http://" + args.ip + ":" + str(services_tuple[i][0]) + " > " + args.ip + "_nikto.txt")
+    service = services_tuple[i][1]
+    port = services_tuple[i][0]
+    if "http" in service:
+        port =  services_tuple[i][0]
+        #Run basic nikto scan -> write to file
+        #os.system("nikto -h " + "http://" + args.ip + ":" + str(port) + " > " + args.ip + "p" + port  + "_nikto.txt")
+        #Run searchsploit on server version
+        get_http_server_version = ("cat " + args.ip + "p" + port  + "_nikto.txt" " | grep \"Server:\"" " | cut -d \" \" -f 3")  
+        http_version = subprocess.check_output(get_http_server_version, shell=True)
+        print(http_version)
+        http_version = http_version.split("/")
+        print(http_version)
+      
+        print(http_version)
+        os.system("searchsploit " + str(http_version) + "> " + args.ip + "p" + port + "sploit_http_server.txt") 
     if "ssh" in services_tuple[i]:
         print(services_tuple[i])
     if "netbios-ssn" in services_tuple[i]:
