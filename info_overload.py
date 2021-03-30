@@ -5,7 +5,7 @@ import subprocess
 
 #NOTE: I am an idiot and have only included tcp services
 #Parse user arguments
-parser = argparse.ArgumentParser(description='3ncrypt0R')                                                                                                                                               
+parser = argparse.ArgumentParser(description='3numer4t0r')                                                                                                                                               
 parser.add_argument('-ip',
                     metavar='target host',
                     type=str,
